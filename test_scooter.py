@@ -26,4 +26,15 @@ def test_scooter_low_battery(default_scooter):
     
     assert default_scooter.is_locked == True
     
+@pytest.mark.parametrize("battery_level, expected_status", [
+    (100, "RIDE_ACTIVE"),
+    (50, "RIDE_ACTIVE"),
+    (1, "RIDE_ACTIVE"),
+    (0, "LOW_BATTERY")
+])
+def test_scooter_battery_levels(battery_level, expected_status):
+    scotter = Scooter(battery_level, 10, True)
     
+    result = scotter.start_ride()
+    
+    assert result == expected_status
