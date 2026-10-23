@@ -1,4 +1,4 @@
-class scooter():
+class Scooter():
     def __init__(self, battery , milleage , is_locked=True):
         self.battery = battery
         self.milleage = milleage
@@ -6,7 +6,7 @@ class scooter():
         
         
     def start_ride(self):
-        if self.battery > 25:
+        if self.battery > 0:
             self.is_locked = False
             self.battery = self.battery - 1
             self.milleage = self.milleage + 1
