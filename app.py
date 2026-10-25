@@ -28,28 +28,57 @@ def read_root():
                 Включить самокат
             </button>
             
+            <button id="stop-btn" style="padding: 15px 30px; front-size: 18px; cursor: pointer; background-color: #4CAF50; color: White; border: none; border-radius: 5px;">
+            Закончить поездку
+            </button>
+            
             <script>
-                const button = document.getElementById("start-btn");
-                
-                button.addEventListener('click', function() {
-                    fetch ('/start', { method: 'POST' })
+                const startBtn = document.getElementById("start-btn");
+                startBtn.addEventListener('click', function() {
+                    fetch('/start', { method: 'POST' })
                     .then(response => response.json())
                     .then(data => {
                         if (data.result === 'RIDE_ACTIVE') {
-                            button.innerText = 'Самокат включен(Поездка Активна)';
-                            button.style.backgroundColor ='#2196F3';
+                            startBtn.innerText = 'Самокат включен (Поездка Активна) 🟢';
+                            startBtn.style.backgroundColor = '#2196F3';
                         }
                     });
-            });
-        </script>
-    </body>
-</html>
+                });
+
+                const stopBtn = document.getElementById("stop-btn");
+                stopBtn.addEventListener('click', function() {
+                    fetch('/end', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === 'READY') {
+                            stopBtn.innerText = 'Поездка окончена 🛑';
+                            stopBtn.style.backgroundColor = '#f44336'; 
+                            
+                            startBtn.innerText = 'Включить самокат';
+                            startBtn.style.backgroundColor = '#4CAF50';
+                        }
+                    });
+                });
+            </script>
+        </body>
+    </html>
+
 """
     
 @app.post("/start")
 def start_scooter_ride():
     
     result = my_scooter.start_ride()
+    
+    return {
+        "result": result,
+        "is_locked": my_scooter.is_locked
+    }
+    
+@app.post("/end")
+def stop_scooter_ride():
+    
+    result = my_scooter.stop_ride()
     
     return {
         "result": result,

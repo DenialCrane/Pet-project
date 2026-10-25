@@ -14,6 +14,10 @@ class Scooter():
         else:
             return "LOW_BATTERY"
         
+    def stop_ride(self):
+        self.is_locked = True
+        return "READY"
+      
     
     def charge(self):
         self.battery = 100
