@@ -24,6 +24,9 @@ def read_root():
         </head>
         <body style="text-align: center; front-family: Arial, sans-serif; margin-top: 50px;">
             <h1>Управление Самокатом Eco-Ride </h1>
+            <p>Батарея: <span id="battery-display">90</span>%</p>
+            <p>Пробег: <span id="mileage-display">15</span>км</p>
+            
             <button id="start-btn" style="padding: 15px 30px; front-size: 18px; cursor: pointer; background-color: #4CAF50; color: White; border: none; border-radius: 5px;">
                 Включить самокат
             </button>
@@ -59,6 +62,18 @@ def read_root():
                         }
                     });
                 });
+                function UpdateStatus() {
+                    fetch('/status')
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        document.getElementById("battery-display").innerText = data.Battery;
+                        document.getElementById("mileage-display").innerText = data.milleage;
+                    });
+                }
+                setInterval(UpdateStatus, 2000);
+                UpdateStatus();
+                
             </script>
         </body>
     </html>

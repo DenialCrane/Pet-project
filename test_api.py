@@ -17,3 +17,10 @@ def test_api_start_ride():
     assert finally_data['result'] == "READY"
     assert finally_data["is_locked"] == True
     
+    response = requests.get("http://127.0.0.1:8000/status")
+    assert response.status_code == 200
+    
+    finally_code = response.json()
+    
+    assert type(finally_code["Battery"]) == int
+    assert type(finally_code["milleage"]) == int

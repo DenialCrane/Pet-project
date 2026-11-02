@@ -1,6 +1,6 @@
-from scooter import scooter
+from Scooter import Scooter
 
-my_scooter = scooter(20, 0 , True)
+my_scooter = Scooter(20, 0 , True)
 
 print("=== СИСТЕМА УПРАВЛЕНИЯ ЭКО-САМОКАТОМ ECO-RIDE ===")
 
